@@ -151,6 +151,7 @@
     "/test/order": {
       "post": {
         "x-mojo-to": "demo#test_order",
+        "operationId": "test_order",
         "description": "place a test order",
         "parameters": [],
         "responses": {
