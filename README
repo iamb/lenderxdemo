@@ -1,5 +1,7 @@
 quickstart:
 
+this is a pretty standard full mojolicious app
+
 in the project dir (where this readme is)
 
   cpanm --installdeps ./
@@ -7,18 +9,21 @@ in the project dir (where this readme is)
 set up api key and secret. either use env vars LENDERX_API_KEY and
 LENDERX_API_SECRET or set values in the config file ./lender_xdemo.yml
 
-NOTE: integration tests are dependent on having credentials set up for the app.
+NOTE: integration tests are dependent on having credentials set up and internet
+connectivity. see notes in the tests. not thrilled with them, just wanted to
+have *some* functional tests.
 
-run locally (adjust listen address and port as desired):
-  hypnotoad -f bin/lender_xdemo -l http://*:8080
+  prove -l t
 
-now listening on :8080
+run the api locally (adjust listen address and port as desired):
+  morbo -l http://*:8080 bin/lender_xdemo
 
-having a public https url that fowards to the postback endpoint (/postback) is
-left up to the reader. whatever the public url is should be substituted for
-<url> below.
+having a public https url that fowards to the postback endpoint
+(/api/v1/postback) is left up to the reader. whatever the public url is should
+be substituted for <url> below.
 
-commands are used as a quick interface to the api:
+hit the api locally with any old http client (curl, whathaveyou), or commands
+are available as a quick interface:
 
   ./bin/lender_xdemo subscriptions list
   ./bin/lender_xdemo subscriptions add -u <url> -e Event.Appraisal.Order.Assigned
