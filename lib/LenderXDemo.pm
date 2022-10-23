@@ -60,6 +60,8 @@ sub startup {
 
   $self->secrets($config->{secrets} || [sha1_sum($$ . steady_time . rand)]);
 
+  push(@{$self->commands->namespaces}, 'LenderXDemo::Command');
+
   my $openapi_conf = $config->{openapi} || {};
   $openapi_conf->{url} = $self->spec_url;
   $self->plugin(OpenAPI => $openapi_conf);

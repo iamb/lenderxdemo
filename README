@@ -2,10 +2,26 @@ quickstart:
 
 in the project dir (where this readme is)
 
-cpanm --installdeps ./
-hypnotoad -f bin/lender_xdemo -l http://*:8080
+  cpanm --installdeps ./
+
+set up api key and secret. either use env vars LENDERX_API_KEY and
+LENDERX_API_SECRET or set values in the config file ./lender_xdemo.yml
+
+run locally (adjust listen address and port as desired):
+  hypnotoad -f bin/lender_xdemo -l http://*:8080
 
 now listening on :8080
 
-curl http://127.0.0.1:8080/api/v1/event # list events
+having a public https url that fowards to the postback endpoint (/postback) is
+left up to the reader. whatever the public url is should be substituted for
+<url> below.
+
+commands are used as a quick interface to the api:
+
+  ./bin/lender_xdemo subscriptions list
+  ./bin/lender_xdemo subscriptions add -u <url> -e Event.Appraisal.Order.Assigned
+  ./bin/lender_xdemo subscriptions remove -i <event_id>
+  ./bin/lender_xdemo subscriptions --help # for usage info
+
+  ./bin/lender_xdemo test_order
 
