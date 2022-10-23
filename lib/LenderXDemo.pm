@@ -41,7 +41,7 @@ has lenderx_spec_url => sub {
   my $self = shift;
   my $url = $ENV{LENDERX_SPEC_FILE}
             || $self->config('lenderx_spec_url')
-            || $self->home->child('appraisal.json');
+            || $self->home->child('public/appraisal.json');
   $url = Mojo::URL->new($url);
 };
 
