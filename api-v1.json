@@ -7,13 +7,40 @@
   "schemes": [ "http" ],
   "basePath": "/api/v1",
   "definitions": {
+    "error_details": {
+      "description": "error response",
+      "title": "error response",
+      "type": "object",
+      "properties": {
+        "errors": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "message": { "type": "string" }
+            },
+            "required": ["message"]
+          }
+        }
+      },
+      "required": [ "errors" ]
+    },
+    "error_response": {
+      "description": "error response",
+      "title": "error response",
+      "type": "object",
+      "properties": {
+        "error": { "type": "string" }
+      },
+      "required": [ "error" ]
+    }
   },
   "security": [
   ],
   "securityDefinitions": {
   },
   "paths": {
-    "/event": {
+    "/event/subscriptions": {
       "get": {
         "x-mojo-to": "demo#list_events",
         "operationId": "list_events",
@@ -22,7 +49,123 @@
             "description": "OK",
             "schema": { "$ref": "./appraisal.json#/definitions/event_response_list" }
           },
+          "500": {
+            "description": "internal server error",
+            "schema": { "$ref": "#/definitions/error_response" }
+          }
+        }
+      },
+      "post": {
+        "x-mojo-to": "demo#manage_events",
+        "operationId": "manage_events",
+        "parameters": [
+          {
+            "description": "event subscription management details",
+            "in": "body",
+						"name": "data",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "add": {
+                  "type": "array",
+                  "uniqueItems": true,
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "events": {
+                        "type": "array",
+                        "items": {
+                          "enum": [
+                             "Event.Appraisal.Order.Assigned",
+                             "Event.Appraisal.Document.Added",
+                             "Event.Appraisal.Stipulation.Added",
+                             "Event.Appraisal.Comment.Added",
+                             "Event.Appraisal.Order.Changed",
+                             "Event.Appraisal.Order.Form.Changed",
+                             "Event.Appraisal.Order.Form.Added",
+                             "Event.Appraisal.Order.Form.Removed",
+                             "Event.Appraisal.Order.LenderRequestedDeliveryDate.Changed",
+                             "Event.Appraisal.Order.Resumed",
+                             "Event.Appraisal.Order.OnHold",
+                             "Event.Appraisal.Order.Cancelled",
+                             "Event.Appraisal.Order.Rushed",
+                             "Event.Appraisal.Order.Renegotiate",
+                             "Event.Appraisal.Order.Accepted",
+                             "Event.Appraisal.Order.Cover.Letter.Applied"
+                          ]
+                        }
+                      },
+                      "url": { "type": "string" }
+                    },
+                    "required": [ "events", "url" ]
+                  }
+                },
+                "remove": {
+                  "type": "array",
+                  "uniqueItems": true,
+                  "items": { "type": "string" }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "added": {
+                  "type": "array",
+                  "items": { "$ref": "./appraisal.json#/definitions/event_response" }
+                },
+                "removed": {
+                  "type": "array",
+                  "items": { "$ref": "./appraisal.json#/definitions/event_deleted_response" }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "invalid input",
+            "schema": { "$ref": "#/definitions/error_details" }
+          },
+          "500": {
+            "description": "internal server error",
+            "schema": { "$ref": "#/definitions/error_response" }
+          }
+        }
+      }
+    },
+    "/postback": {
+      "post": {
+        "x-mojo-to": "demo#postback",
+        "description": "postback endpoint for event subscriptions",
+        "parameters": [],
+        "responses": {
+          "200": { "description": "OK" },
           "500": { "description": "internal server error" }
+        }
+      }
+    },
+    "/test/order": {
+      "post": {
+        "x-mojo-to": "demo#test_order",
+        "description": "place a test order",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": "OK",
+            "schema": { "$ref": "./appraisal.json#/definitions/test_order_response" }
+          },
+          "400": {
+            "description": "invalid input",
+            "schema": { "$ref": "#/definitions/error_details" }
+          },
+          "500": {
+            "description": "internal server error",
+            "schema": { "$ref": "#/definitions/error_response" }
+          }
         }
       }
     }
