@@ -7,6 +7,8 @@ in the project dir (where this readme is)
 set up api key and secret. either use env vars LENDERX_API_KEY and
 LENDERX_API_SECRET or set values in the config file ./lender_xdemo.yml
 
+NOTE: integration tests are dependent on having credentials set up for the app.
+
 run locally (adjust listen address and port as desired):
   hypnotoad -f bin/lender_xdemo -l http://*:8080
 
