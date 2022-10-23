@@ -3,7 +3,6 @@ use Mojo::Base 'Mojolicious';
 use LenderXDemo::Client;
 use Mojo::URL;
 use Mojo::Util qw(sha1_sum steady_time);
-use OpenAPI::Client;
 
 has api_key => sub {
   my $self = shift;
