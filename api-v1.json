@@ -1,0 +1,30 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "LenderXDemo",
+    "version": "0.01"
+  },
+  "schemes": [ "http" ],
+  "basePath": "/api/v1",
+  "definitions": {
+  },
+  "security": [
+  ],
+  "securityDefinitions": {
+  },
+  "paths": {
+    "/event": {
+      "get": {
+        "x-mojo-to": "demo#list_events",
+        "operationId": "list_events",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": { "$ref": "./appraisal.json#/definitions/event_response_list" }
+          },
+          "500": { "description": "internal server error" }
+        }
+      }
+    }
+  }
+}
