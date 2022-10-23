@@ -50,7 +50,7 @@ has spec_url => sub {
   my $self = shift;
   my $url = $ENV{API_SPEC_FILE}
             || $self->config('api_spec_url')
-            || $self->home->child('api-v1.json');
+            || $self->home->child('public/api-v1.json');
   $url = Mojo::URL->new($url);
 };
 
