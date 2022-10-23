@@ -69,7 +69,7 @@ sub startup {
   $self->helper('reply.exception' => sub { shift->reply->json_exception(@_) });
   $self->helper('reply.not_found' => sub { shift->reply->json_not_found(@_) });
 
-	$self->routes->get('/api/v1/doc' => sub { shift->render(template => 'doc') });
+  $self->routes->get('/api/v1/doc' => sub { shift->render(template => 'doc') });
 
 }
 
