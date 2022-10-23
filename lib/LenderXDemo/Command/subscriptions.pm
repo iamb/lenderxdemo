@@ -2,6 +2,9 @@ package LenderXDemo::Command::subscriptions;
 use Mojo::Base 'Mojolicious::Command';
 use Mojo::Util 'getopt';
 
+has description => 'manage event subscriptions';
+has usage => sub { shift->extract_usage };
+
 sub _cmd_list {
   my ($self, $client, @args) = @_;
 
