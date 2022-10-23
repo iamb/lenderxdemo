@@ -19,12 +19,12 @@ $t->post_ok('/api/v1/event/subscriptions', json => { add => [$add] })
   ->status_is(200)
   ->json_is('/added/0/events/0', $add->{events}->[0])
   ->json_is('/added/0/url', $add->{url});
+my $added_event = $t->tx->res->json->{added}->[0];
 
 $t->post_ok('/api/v1/test/order')
-  ->status_is(200)
+  ->status_is(201)
   ->json_has('/order_id');
 
-my $added_event = $t->tx->res->json->{added}->[0];
 $t->post_ok('/api/v1/event/subscriptions', json => { remove => [ $added_event->{event_subscription_id} ] })
   ->status_is(200)
   ->json_is('/removed/0/event_subscription_id', $added_event->{event_subscription_id})
