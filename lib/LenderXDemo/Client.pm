@@ -8,8 +8,7 @@ has api_key => sub { croak 'api_key not set' };
 
 has api_secret => sub { croak 'api_secret not set' };
 
-has auth_url => sub { croak 'auth url not set'
-};
+has auth_url => sub { croak 'auth url not set' };
 
 sub _tx_error {
   my $tx = shift;
