@@ -3,7 +3,7 @@ use Mojo::Base 'Mojolicious::Controller';
 
 sub postback {
   my $c = shift;
-  $c->app->log->debug('subscription event: '.$c->tx->req->body);
+  $c->app->log->warn('subscription event: '.$c->tx->req->body);
   $c->render(text => 'OK');
 }
 
